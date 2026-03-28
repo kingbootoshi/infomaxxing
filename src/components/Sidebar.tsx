@@ -20,7 +20,7 @@ export function Sidebar({
         {/* Logo */}
         <div className="px-3 py-3 mb-2">
           <h1 className="text-xl font-bold text-[var(--foreground)]">
-            infomaxxing
+            infomaxxxing
           </h1>
         </div>
 

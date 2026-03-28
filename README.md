@@ -1,10 +1,17 @@
-# infomaxxing
+<p align="center">
+  <img src="public/banner.png" alt="infomaxxxing" width="100%" />
+</p>
 
-Doomscroll your way to knowledge. An infinite-scroll feed of core engineering concepts, styled like X/Twitter.
+<p align="center">
+  <strong>Doomscroll your way to knowledge.</strong><br/>
+  An infinite-scroll feed of core engineering concepts, styled like X/Twitter.
+</p>
 
-Replace mindless scrolling with learning. Security, networking, algorithms, design patterns, systems, cryptography, and more - one concept at a time.
+<p align="center">
+  <a href="https://infomaxxx.ing">infomaxxx.ing</a>
+</p>
 
-![infomaxxing](public/preview.png)
+![infomaxxxing](public/preview.png)
 
 ## Run it
 

@@ -7,11 +7,15 @@ import { ConceptSummary } from "@/lib/concepts";
 interface RightSidebarProps {
   totalCount: number;
   suggestionPool: ConceptSummary[];
+  initialSuggestions: ConceptSummary[];
   searchQuery: string;
   onSearch: (query: string) => void;
+  seenCount?: number;
+  milestones?: number[];
+  celebratedMilestones?: number[];
 }
 
-function pickSuggestions(pool: ConceptSummary[]): ConceptSummary[] {
+function shufflePick(pool: ConceptSummary[]): ConceptSummary[] {
   const seen = new Set<string>();
   const picks: ConceptSummary[] = [];
   const shuffled = [...pool].sort(() => Math.random() - 0.5);
@@ -25,11 +29,20 @@ function pickSuggestions(pool: ConceptSummary[]): ConceptSummary[] {
   return picks;
 }
 
-export function RightSidebar({ totalCount, suggestionPool, searchQuery, onSearch }: RightSidebarProps) {
-  const [suggestions, setSuggestions] = useState(() => pickSuggestions(suggestionPool));
+export function RightSidebar({
+  totalCount,
+  suggestionPool,
+  initialSuggestions,
+  searchQuery,
+  onSearch,
+  seenCount = 0,
+  milestones = [],
+  celebratedMilestones = [],
+}: RightSidebarProps) {
+  const [suggestions, setSuggestions] = useState(initialSuggestions);
 
   const reshuffle = useCallback(() => {
-    setSuggestions(pickSuggestions(suggestionPool));
+    setSuggestions(shufflePick(suggestionPool));
   }, [suggestionPool]);
 
   return (
@@ -48,7 +61,7 @@ export function RightSidebar({ totalCount, suggestionPool, searchQuery, onSearch
           placeholder="Search concepts"
           value={searchQuery}
           onChange={(e) => onSearch(e.target.value)}
-          className="w-full bg-[var(--card)] text-[var(--foreground)] placeholder-[var(--muted)] rounded-full py-2.5 pl-10 pr-8 text-[15px] border border-transparent focus:border-[var(--accent)] focus:bg-transparent outline-none transition-colors"
+          className="w-full bg-[var(--background)] text-[var(--foreground)] placeholder-[var(--muted)] rounded-full py-2.5 pl-10 pr-8 text-[15px] border border-[var(--border)] focus:border-[var(--accent)] outline-none transition-colors"
         />
         {searchQuery && (
           <button
@@ -63,7 +76,7 @@ export function RightSidebar({ totalCount, suggestionPool, searchQuery, onSearch
       </div>
 
       {/* What to learn - suggestions */}
-      <div className="bg-[var(--card)] rounded-2xl overflow-hidden">
+      <div className="bg-[var(--background)] border border-[var(--border)] rounded-2xl overflow-hidden">
         <h3 className="px-4 py-3 text-[20px] font-bold text-[var(--foreground)]">
           What to learn
         </h3>
@@ -95,29 +108,41 @@ export function RightSidebar({ totalCount, suggestionPool, searchQuery, onSearch
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="bg-[var(--card)] rounded-2xl p-4">
-        <h3 className="text-[15px] font-bold text-[var(--foreground)] mb-2">
-          Your Knowledge Base
-        </h3>
-        <div className="space-y-2 text-[13px]">
-          <div className="flex justify-between">
-            <span className="text-[var(--muted)]">Total concepts</span>
-            <span className="text-[var(--foreground)] font-semibold">
-              {totalCount}+
-            </span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-[var(--muted)]">Categories</span>
-            <span className="text-[var(--foreground)] font-semibold">14</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-[var(--muted)]">Scroll to learn</span>
-            <span className="text-[var(--foreground)] font-semibold">
-              Infinite
-            </span>
+      {/* Your Progress */}
+      <div className="bg-[var(--background)] border border-[var(--border)] rounded-2xl overflow-hidden">
+        <div className="px-4 py-3 flex items-center justify-between">
+          <h3 className="text-[20px] font-bold text-[var(--foreground)]">
+            Your Progress
+          </h3>
+          <span className="text-[13px] text-[var(--muted)]">{seenCount} / {totalCount}</span>
+        </div>
+        <div className="px-4 pb-2">
+          <div className="h-[3px] bg-[var(--border)] rounded-full overflow-hidden">
+            <div
+              className="h-full bg-[var(--accent)] rounded-full transition-all duration-500"
+              style={{ width: `${Math.min((seenCount / totalCount) * 100, 100)}%` }}
+            />
           </div>
         </div>
+        {milestones.length > 0 && (
+          <div className="px-4 py-2 flex flex-wrap gap-1.5 border-t border-[var(--border)]">
+            {milestones.map((m) => {
+              const achieved = celebratedMilestones.includes(m);
+              return (
+                <span
+                  key={m}
+                  className={`text-[12px] px-2 py-0.5 rounded font-mono ${
+                    achieved
+                      ? "text-[var(--accent)]"
+                      : "text-[var(--muted)]"
+                  }`}
+                >
+                  {achieved && "\u2713 "}{m}
+                </span>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

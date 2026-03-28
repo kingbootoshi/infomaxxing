@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>infomaxxxing - Mobile Header Variations</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    color: #e7e9ea;
+    font-family: 'Instrument Sans', -apple-system, sans-serif;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+  .page-title {
+    text-align: center;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #71767b;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .page-subtitle {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #e7e9ea;
+    margin-bottom: 48px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+    gap: 40px;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  .variation {
+    background: #000;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #2f3336;
+    width: 375px;
+    margin: 0 auto;
+  }
+  .variation-label {
+    padding: 16px 20px 8px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #1d9bf0;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+  .variation-name {
+    padding: 0 20px 16px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #e7e9ea;
+  }
+  .variation-desc {
+    padding: 0 20px 20px;
+    font-size: 13px;
+    color: #71767b;
+    line-height: 1.5;
+  }
+
+  /* Shared */
+  .pills-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    scrollbar-width: none;
+  }
+  .pills-row::-webkit-scrollbar { display: none; }
+  .pill {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: none;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .pill.active { background: #e7e9ea; color: #000; }
+  .pill.inactive { background: #16181c; color: #e7e9ea; }
+  .pill.inactive:hover { background: #1c1e21; }
+
+  /* Feed preview */
+  .feed-preview {
+    border-top: 1px solid #2f3336;
+  }
+  .feed-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid #2f3336;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .feed-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .feed-content { flex: 1; min-width: 0; }
+  .feed-name { font-weight: 700; font-size: 14px; color: #e7e9ea; }
+  .feed-handle { font-size: 14px; color: #71767b; margin-left: 4px; }
+  .feed-text { font-size: 14px; color: #e7e9ea; margin-top: 2px; line-height: 1.4; }
+  .feed-tags { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .feed-tag { font-size: 11px; padding: 2px 8px; border-radius: 99px; }
+
+  /* Progress icon */
+  .progress-btn {
+    background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; color: #71767b; transition: color 0.15s;
+  }
+  .progress-btn:hover { color: #e7e9ea; }
+  .progress-badge {
+    font-size: 11px; font-family: 'JetBrains Mono', monospace; font-weight: 600;
+    background: rgba(29,155,240,0.15); color: #1d9bf0; padding: 2px 7px; border-radius: 99px;
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">Mobile Header Exploration</p>
+<h1 class="page-subtitle">infomaxxxing</h1>
+
+<div class="grid">
+
+<!-- ============================================ -->
+<!-- VARIATION 1: X Tabs Style -->
+<!-- ============================================ -->
+<div>
+  <div class="variation-label">Variation 01</div>
+  <div class="variation-name">X Tabs</div>
+  <div class="variation-desc">Mimics X's exact tab pattern. Logo left, progress right, underlined tabs below. Single row of tabs replaces pills - active tab gets the blue underline. Most faithful to X.</div>
+  <div class="variation">
+    <div style="background:#000;">
+      <!-- Row 1: logo + progress -->
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 16px;">
+        <div style="font-size:18px; font-weight:700; color:#e7e9ea; letter-spacing:-0.02em;">infomaxxxing</div>
+        <button class="progress-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span class="progress-badge">12</span>
+        </button>
+      </div>
+      <!-- Row 2: X-style tabs with underline -->
+      <div style="display:flex; overflow-x:auto; scrollbar-width:none; border-bottom:1px solid #2f3336;" id="tabs1">
+        <button onclick="setTab(this,'tabs1')" style="flex:1; min-width:0; padding:12px 4px 14px; font-size:14px; font-weight:700; color:#e7e9ea; background:none; border:none; cursor:pointer; position:relative; font-family:inherit; border-bottom:3px solid #1d9bf0;">For You</button>
+        <button onclick="setTab(this,'tabs1')" style="flex:1; min-width:0; padding:12px 4px 14px; font-size:14px; font-weight:500; color:#71767b; background:none; border:none; cursor:pointer; position:relative; font-family:inherit; border-bottom:3px solid transparent;">Security</button>
+        <button onclick="setTab(this,'tabs1')" style="flex:1; min-width:0; padding:12px 4px 14px; font-size:14px; font-weight:500; color:#71767b; background:none; border:none; cursor:pointer; position:relative; font-family:inherit; border-bottom:3px solid transparent;">Web</button>
+        <button onclick="setTab(this,'tabs1')" style="flex:1; min-width:0; padding:12px 4px 14px; font-size:14px; font-weight:500; color:#71767b; background:none; border:none; cursor:pointer; position:relative; font-family:inherit; border-bottom:3px solid transparent;">Systems</button>
+        <button onclick="setTab(this,'tabs1')" style="flex:1; min-width:0; padding:12px 4px 14px; font-size:14px; font-weight:500; color:#71767b; background:none; border:none; cursor:pointer; position:relative; font-family:inherit; border-bottom:3px solid transparent;">More</button>
+      </div>
+    </div>
+    <div class="feed-preview">
+      <div class="feed-item">
+        <div class="feed-avatar" style="background:#f43f5e22; color:#f43f5e;">&#x1f6e1;</div>
+        <div class="feed-content">
+          <div><span class="feed-name">XSS Prevention</span><span class="feed-handle">@security</span></div>
+          <div class="feed-text">Sanitize user input before rendering it in HTML to prevent script injection.</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-avatar" style="background:#3b82f622; color:#3b82f6;">&#x1f310;</div>
+        <div class="feed-content">
+          <div><span class="feed-name">TCP Handshake</span><span class="feed-handle">@networking</span></div>
+          <div class="feed-text">The SYN, SYN-ACK, ACK dance that establishes a reliable connection.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- VARIATION 2: Single Row Compact -->
+<!-- ============================================ -->
+<div>
+  <div class="variation-label">Variation 02</div>
+  <div class="variation-name">Single Row</div>
+  <div class="variation-desc">Everything in one row. Tiny logo glyph, scrollable pills, progress on the right. Maximum vertical space savings - header is just ~44px. The "For You" state is just "All" pill being active.</div>
+  <div class="variation">
+    <div style="background:#000; border-bottom:1px solid #2f3336;">
+      <div style="display:flex; align-items:center; padding:8px 12px 8px 16px; gap:10px;">
+        <!-- Tiny monogram -->
+        <div style="font-size:15px; font-weight:700; color:#1d9bf0; letter-spacing:-0.05em; flex-shrink:0; font-family:'JetBrains Mono',monospace;">ix</div>
+        <!-- Pills -->
+        <div style="flex:1; overflow-x:auto; display:flex; gap:6px; scrollbar-width:none; min-width:0;">
+          <button class="pill active" style="padding:5px 12px; font-size:12px;">All</button>
+          <button class="pill inactive" style="padding:5px 12px; font-size:12px;">Security</button>
+          <button class="pill inactive" style="padding:5px 12px; font-size:12px;">Networking</button>
+          <button class="pill inactive" style="padding:5px 12px; font-size:12px;">Systems</button>
+          <button class="pill inactive" style="padding:5px 12px; font-size:12px;">Web</button>
+          <button class="pill inactive" style="padding:5px 12px; font-size:12px;">Algorithms</button>
+        </div>
+        <!-- Progress -->
+        <button class="progress-btn" style="flex-shrink:0;">
+          <span class="progress-badge">12</span>
+        </button>
+      </div>
+    </div>
+    <div class="feed-preview">
+      <div class="feed-item">
+        <div class="feed-avatar" style="background:#10b98122; color:#10b981;">&#x2699;</div>
+        <div class="feed-content">
+          <div><span class="feed-name">Factory Method</span><span class="feed-handle">@design-patterns</span></div>
+          <div class="feed-text">A parent type defines how objects get created, subclasses decide the concrete type.</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-avatar" style="background:#8b5cf622; color:#8b5cf6;">&#x1f9e0;</div>
+        <div class="feed-content">
+          <div><span class="feed-name">Dijkstra's Algorithm</span><span class="feed-handle">@algorithms</span></div>
+          <div class="feed-text">Find the cheapest path from one starting node to every other node in the graph.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- VARIATION 3: Glassmorphic Floating Bar -->
+<!-- ============================================ -->
+<div>
+  <div class="variation-label">Variation 03</div>
+  <div class="variation-name">Floating Glass</div>
+  <div class="variation-desc">Header floats over content with a glass blur effect. Feed label is prominent center, pills tuck inside a collapsible row. Progress counter sits inline with the logo. Premium feel.</div>
+  <div class="variation">
+    <div style="position:relative; background:#000;">
+      <!-- Floating glass header -->
+      <div style="background:rgba(0,0,0,0.75); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(47,51,54,0.6);">
+        <!-- Row 1 -->
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 16px 6px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:14px; font-weight:600; color:#71767b;">infomaxxxing</span>
+            <span style="font-size:11px; color:#1d9bf0; font-family:'JetBrains Mono',monospace; background:rgba(29,155,240,0.1); padding:2px 6px; border-radius:4px;">12/560</span>
+          </div>
+          <button class="progress-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </button>
+        </div>
+        <!-- Row 2: pills -->
+        <div style="display:flex; overflow-x:auto; gap:6px; padding:4px 16px 10px; scrollbar-width:none;">
+          <button class="pill active" style="font-size:12px; padding:5px 14px;">For You</button>
+          <button class="pill inactive" style="font-size:12px; padding:5px 14px;">Security</button>
+          <button class="pill inactive" style="font-size:12px; padding:5px 14px;">Networking</button>
+          <button class="pill inactive" style="font-size:12px; padding:5px 14px;">Systems</button>
+          <button class="pill inactive" style="font-size:12px; padding:5px 14px;">Web</button>
+        </div>
+      </div>
+    </div>
+    <div class="feed-preview">
+      <div class="feed-item">
+        <div class="feed-avatar" style="background:#06b6d422; color:#06b6d4;">&#x1f4bb;</div>
+        <div class="feed-content">
+          <div><span class="feed-name">WebSocket</span><span class="feed-handle">@web</span></div>
+          <div class="feed-text">A persistent, full-duplex connection between browser and server.</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-avatar" style="background:#ec489922; color:#ec4899;">&#x1f4be;</div>
+        <div class="feed-content">
+          <div><span class="feed-name">B-Tree</span><span class="feed-handle">@databases</span></div>
+          <div class="feed-text">The self-balancing tree structure that makes database indexes fast.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- VARIATION 4: Segmented Control -->
+<!-- ============================================ -->
+<div>
+  <div class="variation-label">Variation 04</div>
+  <div class="variation-name">iOS Segmented</div>
+  <div class="variation-desc">Borrows iOS segmented control pattern. Logo row is ultra-minimal (just "ix" glyph centered). Categories sit in a floating segmented strip with a sliding indicator. Clean, native feel.</div>
+  <div class="variation">
+    <div style="background:#000; border-bottom:1px solid #2f3336;">
+      <!-- Row 1: minimal -->
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 16px;">
+        <div style="width:40px;"></div>
+        <div style="font-size:16px; font-weight:700; color:#e7e9ea; text-align:center;">For You</div>
+        <button class="progress-btn" style="width:40px; justify-content:flex-end;">
+          <span class="progress-badge">12</span>
+        </button>
+      </div>
+      <!-- Segmented control -->
+      <div style="padding:0 12px 10px;">
+        <div style="display:flex; background:#16181c; border-radius:10px; padding:3px; gap:2px;" id="seg1">
+          <button onclick="setSeg(this,'seg1')" style="flex:1; padding:6px 2px; font-size:12px; font-weight:600; border-radius:8px; border:none; cursor:pointer; font-family:inherit; background:#e7e9ea; color:#000; transition:all 0.2s;">All</button>
+          <button onclick="setSeg(this,'seg1')" style="flex:1; padding:6px 2px; font-size:12px; font-weight:500; border-radius:8px; border:none; cursor:pointer; font-family:inherit; background:transparent; color:#71767b; transition:all 0.2s;">Security</button>
+          <button onclick="setSeg(this,'seg1')" style="flex:1; padding:6px 2px; font-size:12px; font-weight:500; border-radius:8px; border:none; cursor:pointer; font-family:inherit; background:transparent; color:#71767b; transition:all 0.2s;">Web</button>
+          <button onclick="setSeg(this,'seg1')" style="flex:1; padding:6px 2px; font-size:12px; font-weight:500; border-radius:8px; border:none; cursor:pointer; font-family:inherit; background:transparent; color:#71767b; transition:all 0.2s;">Systems</button>
+          <button onclick="setSeg(this,'seg1')" style="flex:1; padding:6px 2px; font-size:12px; font-weight:500; border-radius:8px; border:none; cursor:pointer; font-family:inherit; background:transparent; color:#71767b; transition:all 0.2s;">Code</button>
+        </div>
+      </div>
+    </div>
+    <div class="feed-preview">
+      <div class="feed-item">
+        <div class="feed-avatar" style="background:#f59e0b22; color:#f59e0b;">&#x1f4da;</div>
+        <div class="feed-content">
+          <div><span class="feed-name">Linked List</span><span class="feed-handle">@data-structures</span></div>
+          <div class="feed-text">A chain of nodes where each one points to the next, allowing O(1) insertion.</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-avatar" style="background:#6366f122; color:#6366f1;">&#x1f5a5;</div>
+        <div class="feed-content">
+          <div><span class="feed-name">Load Balancing</span><span class="feed-handle">@systems</span></div>
+          <div class="feed-text">Distributing incoming requests across multiple servers evenly.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- VARIATION 5: Minimal Ticker -->
+<!-- ============================================ -->
+<div>
+  <div class="variation-label">Variation 05</div>
+  <div class="variation-name">Ticker Strip</div>
+  <div class="variation-desc">One ultra-thin row. Logo glyph, then a horizontal ticker-style category strip with the active one highlighted. Progress count sits right-aligned. Total height ~38px. Maximum content space.</div>
+  <div class="variation">
+    <div style="background:#000; border-bottom:1px solid #2f3336;">
+      <div style="display:flex; align-items:center; padding:7px 12px; gap:8px;">
+        <!-- Logo dot -->
+        <div style="width:24px; height:24px; border-radius:6px; background:#1d9bf0; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:11px; font-weight:700; color:#000; font-family:'JetBrains Mono',monospace;">ix</div>
+        <!-- Divider -->
+        <div style="width:1px; height:16px; background:#2f3336; flex-shrink:0;"></div>
+        <!-- Scrollable categories as text -->
+        <div style="flex:1; overflow-x:auto; display:flex; gap:4px; align-items:center; scrollbar-width:none; min-width:0;">
+          <span style="flex-shrink:0; font-size:13px; font-weight:700; color:#e7e9ea; padding:3px 10px; background:#16181c; border-radius:6px; cursor:pointer;">All</span>
+          <span style="flex-shrink:0; font-size:13px; color:#71767b; padding:3px 8px; cursor:pointer;">Sec</span>
+          <span style="flex-shrink:0; font-size:13px; color:#71767b; padding:3px 8px; cursor:pointer;">Net</span>
+          <span style="flex-shrink:0; font-size:13px; color:#71767b; padding:3px 8px; cursor:pointer;">Sys</span>
+          <span style="flex-shrink:0; font-size:13px; color:#71767b; padding:3px 8px; cursor:pointer;">Web</span>
+          <span style="flex-shrink:0; font-size:13px; color:#71767b; padding:3px 8px; cursor:pointer;">Algo</span>
+          <span style="flex-shrink:0; font-size:13px; color:#71767b; padding:3px 8px; cursor:pointer;">DB</span>
+          <span style="flex-shrink:0; font-size:13px; color:#71767b; padding:3px 8px; cursor:pointer;">DevOps</span>
+          <span style="flex-shrink:0; font-size:13px; color:#71767b; padding:3px 8px; cursor:pointer;">Crypto</span>
+        </div>
+        <!-- Divider -->
+        <div style="width:1px; height:16px; background:#2f3336; flex-shrink:0;"></div>
+        <!-- Progress -->
+        <span style="flex-shrink:0; font-size:11px; color:#1d9bf0; font-family:'JetBrains Mono',monospace; font-weight:600;">12</span>
+      </div>
+    </div>
+    <div class="feed-preview">
+      <div class="feed-item">
+        <div class="feed-avatar" style="background:#a855f722; color:#a855f7;">&#x2699;</div>
+        <div class="feed-content">
+          <div><span class="feed-name">Closures</span><span class="feed-handle">@programming</span></div>
+          <div class="feed-text">A function that remembers variables from the scope where it was created.</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-avatar" style="background:#0ea5e922; color:#0ea5e9;">&#x21c4;</div>
+        <div class="feed-content">
+          <div><span class="feed-name">Mutex</span><span class="feed-handle">@concurrency</span></div>
+          <div class="feed-text">A lock ensuring only one thread accesses a shared resource at a time.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function setTab(btn, containerId) {
+  const container = document.getElementById(containerId);
+  container.querySelectorAll('button').forEach(b => {
+    b.style.borderBottomColor = 'transparent';
+    b.style.color = '#71767b';
+    b.style.fontWeight = '500';
+  });
+  btn.style.borderBottomColor = '#1d9bf0';
+  btn.style.color = '#e7e9ea';
+  btn.style.fontWeight = '700';
+}
+
+function setSeg(btn, containerId) {
+  const container = document.getElementById(containerId);
+  container.querySelectorAll('button').forEach(b => {
+    b.style.background = 'transparent';
+    b.style.color = '#71767b';
+    b.style.fontWeight = '500';
+  });
+  btn.style.background = '#e7e9ea';
+  btn.style.color = '#000';
+  btn.style.fontWeight = '600';
+}
+</script>
+</body>
+</html>

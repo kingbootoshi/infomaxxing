@@ -57,6 +57,19 @@ export function getSuggestionPool(size = 30): ConceptSummary[] {
   }));
 }
 
+export function getInitialSuggestions(pool: ConceptSummary[]): ConceptSummary[] {
+  const seen = new Set<string>();
+  const picks: ConceptSummary[] = [];
+  for (const c of pool) {
+    if (!seen.has(c.category)) {
+      seen.add(c.category);
+      picks.push(c);
+    }
+    if (picks.length >= 5) break;
+  }
+  return picks;
+}
+
 export function searchConcepts(query: string): Concept[] {
   const q = query.toLowerCase();
   return concepts.filter(

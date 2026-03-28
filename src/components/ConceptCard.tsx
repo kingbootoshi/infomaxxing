@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Concept, CATEGORY_META } from "@/lib/types";
 import { CategoryIcon } from "./CategoryIcon";
 
@@ -23,14 +22,18 @@ function VerifiedBadge({ color }: { color: string }) {
   );
 }
 
-export function ConceptCard({ concept }: { concept: Concept }) {
-  const [expanded, setExpanded] = useState(false);
+interface ConceptCardProps {
+  concept: Concept;
+  onSelect?: (concept: Concept) => void;
+}
+
+export function ConceptCard({ concept, onSelect }: ConceptCardProps) {
   const meta = CATEGORY_META[concept.category];
 
   return (
     <article
       className="border-b border-[var(--border)] px-4 py-3 hover:bg-[var(--hover)] transition-colors cursor-pointer"
-      onClick={() => setExpanded(!expanded)}
+      onClick={() => onSelect?.(concept)}
     >
       {/* Header row - avatar + name + handle */}
       <div className="flex gap-3">
@@ -75,65 +78,16 @@ export function ConceptCard({ concept }: { concept: Concept }) {
             ))}
           </div>
 
-          {/* Expanded content - the "thread" */}
-          {expanded && (
-            <div className="mt-3 space-y-3 border-l-2 border-[var(--border)] pl-3">
-              {/* Body */}
-              <div>
-                <p className="text-[var(--foreground)] text-[15px] leading-relaxed">
-                  {concept.body}
-                </p>
-              </div>
-
-              {/* Example */}
-              {concept.example && (
-                <div className="bg-[var(--card)] rounded-xl p-3">
-                  <p className="text-xs text-[var(--muted)] uppercase tracking-wider mb-1 font-semibold">
-                    Example
-                  </p>
-                  <p className="text-[var(--foreground)] text-sm leading-relaxed font-mono">
-                    {concept.example}
-                  </p>
-                </div>
-              )}
-
-              {/* Why it matters */}
-              <div className="bg-[var(--card)] rounded-xl p-3">
-                <p className="text-xs text-[var(--muted)] uppercase tracking-wider mb-1 font-semibold">
-                  Why it matters
-                </p>
-                <p className="text-[var(--foreground)] text-sm leading-relaxed">
-                  {concept.whyItMatters}
-                </p>
-              </div>
-
-              {/* Related terms */}
-              {concept.relatedTerms.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  <span className="text-xs text-[var(--muted)]">Related:</span>
-                  {concept.relatedTerms.map((term) => (
-                    <span
-                      key={term}
-                      className="text-xs text-[var(--accent)] hover:underline cursor-pointer"
-                    >
-                      {term}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
           {/* Bottom action bar - X style */}
           <div className="flex items-center justify-between mt-2 max-w-[425px]">
-            {/* Expand/collapse indicator */}
+            {/* More indicator */}
             <button className="flex items-center gap-1 text-[var(--muted)] hover:text-[var(--accent)] transition-colors group text-[13px]">
               <div className="p-1.5 rounded-full group-hover:bg-[var(--accent)]/10 transition-colors">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 transition-transform ${expanded ? "rotate-180" : ""}`}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
                   <path d="M6 9l6 6 6-6" />
                 </svg>
               </div>
-              {expanded ? "Less" : "More"}
+              More
             </button>
 
             {/* Category label */}

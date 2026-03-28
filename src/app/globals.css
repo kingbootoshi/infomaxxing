@@ -43,3 +43,33 @@ body {
   content-visibility: auto;
   contain-intrinsic-size: auto 120px;
 }
+
+/* Safe area insets for notched devices */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+  }
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Touch target sizing */
+@media (pointer: coarse) {
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  /* Exempt inline text elements */
+  .feed-container button,
+  .feed-container a,
+  [class*="text-[11px]"],
+  [class*="text-[12px]"],
+  [class*="text-[13px]"] {
+    min-height: unset;
+    min-width: unset;
+  }
+}

@@ -7,9 +7,11 @@ import { ConceptCard } from "./ConceptCard";
 interface FeedProps {
   category: Category | null;
   searchQuery?: string;
+  seenIds?: Set<string>;
+  onConceptSelect?: (concept: Concept) => void;
 }
 
-export function Feed({ category, searchQuery }: FeedProps) {
+export function Feed({ category, searchQuery, seenIds, onConceptSelect }: FeedProps) {
   const [concepts, setConcepts] = useState<Concept[]>([]);
   const [cursor, setCursor] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -17,6 +19,8 @@ export function Feed({ category, searchQuery }: FeedProps) {
   const loaderRef = useRef<HTMLDivElement>(null);
   const loadingRef = useRef(false);
   const cursorRef = useRef(0);
+  // Snapshot seenIds at fetch time so sorting doesn't shift cards mid-session
+  const seenAtFetchRef = useRef<Set<string>>(new Set());
 
   // Keep refs in sync with state
   loadingRef.current = loading;
@@ -48,7 +52,14 @@ export function Feed({ category, searchQuery }: FeedProps) {
       if (category) params.set("category", category);
       const res = await fetch(`/api/concepts?${params}`);
       const data = await res.json();
-      setConcepts((prev) => [...prev, ...data.items]);
+      // Sort new batch: unseen first, using snapshot from fetch time
+      const snap = seenAtFetchRef.current;
+      const sorted = [...data.items].sort((a: Concept, b: Concept) => {
+        const aS = snap.has(a.id) ? 1 : 0;
+        const bS = snap.has(b.id) ? 1 : 0;
+        return aS - bS;
+      });
+      setConcepts((prev) => [...prev, ...sorted]);
       setCursor(data.nextCursor);
       cursorRef.current = data.nextCursor;
     } finally {
@@ -62,11 +73,15 @@ export function Feed({ category, searchQuery }: FeedProps) {
     setConcepts([]);
     setCursor(0);
     cursorRef.current = 0;
-  }, [category]);
+    // Snapshot current seenIds for sorting new fetches
+    if (seenIds) seenAtFetchRef.current = new Set(seenIds);
+  }, [category]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Initial load + category change
   useEffect(() => {
     if (concepts.length === 0 && !loading) {
+      // Snapshot seenIds at load time
+      if (seenIds) seenAtFetchRef.current = new Set(seenIds);
       const load = async () => {
         setLoading(true);
         loadingRef.current = true;
@@ -78,7 +93,14 @@ export function Feed({ category, searchQuery }: FeedProps) {
           if (category) params.set("category", category);
           const res = await fetch(`/api/concepts?${params}`);
           const data = await res.json();
-          setConcepts(data.items);
+          // Sort initial batch: unseen first
+          const snap = seenAtFetchRef.current;
+          const sorted = [...data.items].sort((a: Concept, b: Concept) => {
+            const aS = snap.has(a.id) ? 1 : 0;
+            const bS = snap.has(b.id) ? 1 : 0;
+            return aS - bS;
+          });
+          setConcepts(sorted);
           setCursor(data.nextCursor);
           cursorRef.current = data.nextCursor;
         } finally {
@@ -88,7 +110,7 @@ export function Feed({ category, searchQuery }: FeedProps) {
       };
       load();
     }
-  }, [concepts.length, category, loading]);
+  }, [concepts.length, category, loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Intersection observer for infinite scroll - only active when not searching
   useEffect(() => {
@@ -116,7 +138,7 @@ export function Feed({ category, searchQuery }: FeedProps) {
     <div className="feed-container">
       {/* Cards */}
       {displayedConcepts.map((concept, idx) => (
-        <ConceptCard key={`${concept.id}-${idx}`} concept={concept} />
+        <ConceptCard key={`${concept.id}-${idx}`} concept={concept} onSelect={onConceptSelect} />
       ))}
 
       {/* Search empty state */}
