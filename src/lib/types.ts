@@ -11,6 +11,7 @@ export interface Concept {
 }
 
 export type Category =
+  | "ai"
   | "security"
   | "networking"
   | "algorithms"
@@ -27,6 +28,7 @@ export type Category =
   | "concurrency";
 
 export const CATEGORY_META: Record<Category, { label: string; icon: string; color: string }> = {
+  ai: { label: "AI", icon: "brain", color: "#e040fb" },
   security: { label: "Security", icon: "shield", color: "#f43f5e" },
   networking: { label: "Networking", icon: "globe", color: "#3b82f6" },
   algorithms: { label: "Algorithms", icon: "cpu", color: "#8b5cf6" },

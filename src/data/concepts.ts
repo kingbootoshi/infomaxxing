@@ -1,4 +1,5 @@
 import { Concept } from "@/lib/types";
+import { aiConcepts } from "./categories/ai";
 import { securityConcepts } from "./categories/security";
 import { networkingConcepts } from "./categories/networking";
 import { algorithmsConcepts } from "./categories/algorithms";
@@ -952,6 +953,7 @@ const coreConcepts: Concept[] = [
 
 export const concepts: Concept[] = [
   ...coreConcepts,
+  ...aiConcepts,
   ...securityConcepts,
   ...networkingConcepts,
   ...algorithmsConcepts,
