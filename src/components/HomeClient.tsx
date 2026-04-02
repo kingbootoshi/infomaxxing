@@ -137,20 +137,9 @@ export function HomeClient({
       </div>
 
       {/* Main feed column */}
-      <main className="w-full max-w-[600px] border-r border-[var(--border)] flex flex-col min-h-0">
-        {/* Detail view - overlays feed but feed stays mounted */}
-        {selectedConcept && (
-          <ConceptDetail
-            concept={selectedConcept}
-            onBack={handleBack}
-            onSelectRelated={handleSelectRelated}
-            isBookmarked={bookmarks.isBookmarked(selectedConcept.id)}
-            onToggleBookmark={bookmarks.toggleBookmark}
-          />
-        )}
-
-        {/* Feed - always mounted, hidden when viewing a post */}
-        <div className={`flex flex-col min-h-0 flex-1 ${selectedConcept ? "hidden" : ""}`}>
+      <main className="w-full max-w-[600px] border-r border-[var(--border)] flex flex-col min-h-0 relative overflow-hidden">
+        {/* Feed - always mounted and visible so swipe reveals it */}
+        <div className="flex flex-col min-h-0 flex-1">
           {/* Fixed header above scroll area */}
           <div className="shrink-0 bg-black">
             {/* Mobile: X Tabs style header */}
@@ -270,6 +259,19 @@ export function HomeClient({
             </div>
           )}
         </div>
+
+        {/* Detail view - absolutely overlays feed, swipe reveals feed underneath */}
+        {selectedConcept && (
+          <div className="absolute inset-0 z-20">
+            <ConceptDetail
+              concept={selectedConcept}
+              onBack={handleBack}
+              onSelectRelated={handleSelectRelated}
+              isBookmarked={bookmarks.isBookmarked(selectedConcept.id)}
+              onToggleBookmark={bookmarks.toggleBookmark}
+            />
+          </div>
+        )}
       </main>
 
       {/* Right sidebar */}

@@ -35,7 +35,6 @@ export function ConceptDetail({ concept, onBack, onSelectRelated, isBookmarked, 
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.style.transform = "";
-      containerRef.current.style.opacity = "";
       containerRef.current.style.transition = "";
     }
   }, [concept.id]);
@@ -69,7 +68,6 @@ export function ConceptDetail({ concept, onBack, onSelectRelated, isBookmarked, 
         e.preventDefault();
         currentX = Math.max(0, dx);
         el.style.transform = `translateX(${currentX}px)`;
-        el.style.opacity = `${Math.max(0.3, 1 - currentX / 400)}`;
         el.style.transition = "none";
       }
     };
@@ -77,14 +75,12 @@ export function ConceptDetail({ concept, onBack, onSelectRelated, isBookmarked, 
     const onTouchEnd = () => {
       if (direction === "horizontal") {
         if (currentX > 80) {
-          el.style.transition = "transform 0.3s ease-out, opacity 0.3s ease-out";
+          el.style.transition = "transform 0.3s ease-out";
           el.style.transform = `translateX(${window.innerWidth}px)`;
-          el.style.opacity = "0";
           setTimeout(() => onBackRef.current(), 300);
         } else {
-          el.style.transition = "transform 0.3s ease-out, opacity 0.3s ease-out";
+          el.style.transition = "transform 0.3s ease-out";
           el.style.transform = "";
-          el.style.opacity = "";
         }
       }
       direction = null;
