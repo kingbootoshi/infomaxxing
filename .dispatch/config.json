@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "runtime": {},
+  "checks": [
+    {
+      "id": "lint",
+      "command": "bun run lint"
+    }
+  ],
+  "protected_paths": [
+    ".github/**",
+    ".dispatch/**"
+  ],
+  "evals_first": false
+}
